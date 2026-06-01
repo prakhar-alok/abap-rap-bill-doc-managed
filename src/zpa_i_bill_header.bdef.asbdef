@@ -1,0 +1,61 @@
+managed implementation in class zbp_pa_i_bill_header unique;
+strict ( 2 );
+
+define behavior for ZPA_I_Bill_Header //alias <alias_name>
+persistent table zpa_bill_header
+lock master
+authorization master ( instance )
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  field ( readonly : update, mandatory : create ) BillId;
+  association _item { create; }
+
+  mapping for zpa_bill_header
+    {
+      BillId             = bill_id;
+      BillType           = bill_type;
+      BillDate           = bill_date;
+      CustomerId         = customer_id;
+      NetAmount          = net_amount;
+      Currency           = currency;
+      SalesOrg           = sales_org;
+      CreatedBy          = created_by;
+      CreateDat          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+
+}
+
+define behavior for ZPA_I_BILL_ITEM
+persistent table zpa_bill_item
+lock dependent by _header
+authorization dependent by _header
+{
+  update;
+  delete;
+
+  field ( readonly : update, mandatory : create ) BillId, ItemNo;
+  association _header;
+
+  mapping for zpa_bill_item
+    {
+      BillId             = bill_id;
+      ItemNo             = item_no;
+      MaterialId         = material_id;
+      Description        = description;
+      Quantity           = quantity;
+      ItemAmount         = item_amount;
+      Currency           = currency;
+      Uom                = uom;
+      CreatedBy          = created_by;
+      CreateDat          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}

@@ -1,0 +1,5 @@
+@EndUserText.label: 'Billing doc header - Service def'
+define service Zpa_ui_bill_header {
+  expose ZPA_C_BillHeader as BillingDocumentHeader;
+  expose ZPA_C_Bill_Item  as BillingDocumentItem;
+}
